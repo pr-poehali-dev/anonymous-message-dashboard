@@ -1,0 +1,22 @@
+{
+  "tests": [
+    {
+      "name": "Get all topics",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Create new topic",
+      "method": "POST",
+      "path": "/",
+      "headers": {
+        "X-Auth-Token": "test-token"
+      },
+      "body": {
+        "title": "Test Topic"
+      },
+      "expectedStatus": 201
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS topics (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    user_id INTEGER REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE messages 
+ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id),
+ADD COLUMN IF NOT EXISTS topic_id INTEGER REFERENCES topics(id);
+
+CREATE INDEX IF NOT EXISTS idx_messages_topic_id ON messages(topic_id);
+CREATE INDEX IF NOT EXISTS idx_topics_user_id ON topics(user_id);
